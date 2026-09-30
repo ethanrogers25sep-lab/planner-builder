@@ -8,9 +8,9 @@
 :root{--accent:#8b7bb8;--paper:#f1ebf8;--ink:#403947;--muted:#756d79;--bg:#eeeaf0;--font:Inter,system-ui,Arial,sans-serif}
 *{box-sizing:border-box}body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink)}
 button,input,select{font:inherit}button{cursor:pointer}
-.welcome{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px;background:linear-gradient(135deg,#f5eef8,#eef5f1)}
-.hero{width:min(900px,100%);padding:60px 40px;text-align:center;background:#ffffffdd;border:1px solid #fff;border-radius:30px;box-shadow:0 20px 60px #0002}
-.hero .spark{font-size:28px}.hero h1{font-size:clamp(40px,8vw,72px);margin:10px 0 12px;letter-spacing:-2px}.hero h2{font-size:clamp(22px,4vw,34px);margin:0 auto 15px}.hero p{max-width:650px;margin:0 auto 26px;color:var(--muted);font-size:17px;line-height:1.6}.hero-points{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 30px}.hero-points span{padding:9px 13px;border-radius:99px;background:#f2edf5;font-size:13px;font-weight:700}.start{border:0;border-radius:16px;padding:15px 24px;background:var(--accent);color:white;font-weight:900;font-size:16px;box-shadow:0 8px 20px #8b7bb844}
+.welcome{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px;background:radial-gradient(circle at 15% 20%,#fff3c9 0 8%,transparent 9%),radial-gradient(circle at 85% 15%,#e8ddff 0 9%,transparent 10%),linear-gradient(135deg,#f8eef9,#eaf6f1);position:relative;overflow:hidden}.sticker{position:absolute;padding:10px 14px;border-radius:14px;background:#fff;box-shadow:0 8px 20px #0002;font-weight:900;font-size:14px;transform:rotate(-8deg);animation:float 4s ease-in-out infinite}.sticker.s1{left:7%;top:15%;transform:rotate(-12deg)}.sticker.s2{right:8%;top:22%;transform:rotate(9deg);animation-delay:.7s}.sticker.s3{left:10%;bottom:18%;transform:rotate(7deg);animation-delay:1.2s}.sticker.s4{right:9%;bottom:14%;transform:rotate(-7deg);animation-delay:1.8s}.sticker.s5{left:23%;top:8%;font-size:24px;background:transparent;box-shadow:none}.sticker.s6{right:23%;bottom:8%;font-size:24px;background:transparent;box-shadow:none}@keyframes float{50%{translate:0 -7px;rotate:2deg}}
+.hero{width:min(900px,100%);padding:60px 40px;position:relative;z-index:2;text-align:center;background:#ffffffdd;border:1px solid #fff;border-radius:30px;box-shadow:0 20px 60px #0002}
+.hero .spark{font-size:28px}.hero h1{font-size:clamp(40px,8vw,72px);margin:10px 0 12px;letter-spacing:-2px}.hero h2{font-size:clamp(22px,4vw,34px);margin:0 auto 15px}.hero p{max-width:650px;margin:0 auto 26px;color:var(--muted);font-size:17px;line-height:1.6}.hero-points{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 30px}.hero-points span{padding:9px 13px;border-radius:99px;background:#f2edf5;font-size:13px;font-weight:700}.hero-note{margin-top:18px;font-size:12px;color:#8a7d89}.start{border:0;border-radius:16px;padding:15px 24px;background:var(--accent);color:white;font-weight:900;font-size:16px;box-shadow:0 8px 20px #8b7bb844}
 header{padding:15px 22px;background:#fffffff2;border-bottom:1px solid #ddd5df;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:10}header h1{margin:0;font-size:22px}.tag{color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.topbtn,.actions button{border:0;border-radius:11px;padding:10px 14px;background:var(--accent);color:#fff;font-weight:800}.topbtn.dark{background:#403947}
 .app{display:grid;grid-template-columns:295px 1fr;min-height:calc(100vh - 66px)}
 aside{background:#fff;padding:17px;border-right:1px solid #ddd5df;overflow:auto}.group{margin-bottom:16px}label{display:block;font-size:11px;font-weight:850;text-transform:uppercase;letter-spacing:.7px;margin:0 0 6px;color:#655c68}
@@ -26,17 +26,18 @@ input,select{width:100%;padding:10px;border:1px solid #d8d0d9;border-radius:10px
 .switch{width:38px;height:22px;border-radius:20px;background:#c8c1ca;position:relative;border:0}.switch:after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.15s}.switch.on{background:var(--accent)}.switch.on:after{left:18px}
 .print-pages{display:none}
 @media(max-width:800px){.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid #ddd;max-height:none}.workspace{padding:16px}.paper{width:100%;min-height:1018px}.week{height:auto;grid-template-columns:1fr;grid-template-rows:none}.weekdaycard{min-height:190px}.friday{grid-column:auto}.notes-grid{grid-template-columns:1fr;grid-template-rows:310px 430px 170px}.notes-cell:first-child{border-right:0;border-bottom:3px solid #4b4b4b}.notes-cell.summary{grid-column:auto}.daily-grid{grid-template-columns:1fr}.top-actions .hide-mobile{display:none}}
-@media print{body{background:#fff}.no-print,header,.app{display:none!important}.print-pages{display:block}.print-page{width:210mm;height:277mm;min-height:277mm;max-height:277mm;padding:10mm;overflow:hidden;break-after:page;page-break-after:always;background:var(--paper);font-family:var(--font)}@page{size:A4 portrait;margin:10mm}.print-page .notes-grid{grid-template-columns:26% 74%;grid-template-rows:minmax(0,1fr) 125px}.print-page .notes-cell:first-child{border-right:3px solid #4b4b4b}.print-page .notes-cell.summary{grid-column:1/-1;border-top:3px solid #4b4b4b}.print-page .week{height:calc(100% - 92px);grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr .78fr}.print-page .friday{grid-column:1/-1}}
+@media print{body{background:#fff}.welcome,#welcome,.no-print,header,.app{display:none!important}.print-pages{display:block}.print-page{width:210mm;height:277mm;min-height:277mm;max-height:277mm;padding:10mm;overflow:hidden;break-after:page;page-break-after:always;background:var(--paper);font-family:var(--font)}@page{size:A4 portrait;margin:10mm}.print-page .notes-grid{grid-template-columns:26% 74%;grid-template-rows:minmax(0,1fr) 125px}.print-page .notes-cell:first-child{border-right:3px solid #4b4b4b}.print-page .notes-cell.summary{grid-column:1/-1;border-top:3px solid #4b4b4b}.print-page .week{height:calc(100% - 92px);grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr .78fr}.print-page .friday{grid-column:1/-1}}
 </style>
 </head>
 <body>
 <section class="welcome" id="welcome">
+  <div class="sticker s1">📝 Plan it</div><div class="sticker s2">⭐ Focus</div><div class="sticker s3">☕ One step</div><div class="sticker s4">🌱 Progress</div><div class="sticker s5">✦</div><div class="sticker s6">♡</div>
   <div class="hero">
     <div class="spark">✦ ✿ ✦</div>
     <h1>Planner Builder</h1>
     <h2>Prioritize your time today.</h2>
     <p>Build a planner that fits your life, keep your priorities in one place, save time, and make it easier to start instead of putting things off.</p>
-    <div class="hero-points"><span>♡ Plan</span><span>✦ Prioritize</span><span>✓ Get organized</span><span>🖨 Print</span></div>
+    <div class="hero-points"><span>♡ Plan</span><span>✦ Prioritize</span><span>✓ Get organized</span><span>🖨 Print</span></div><div class="hero-note">A cute, customizable space for your plans, notes and priorities.</div>
     <button class="start" onclick="startBuilder()">Let's build my planner →</button>
   </div>
 </section>
@@ -44,7 +45,7 @@ input,select{width:100%;padding:10px;border:1px solid #d8d0d9;border-radius:10px
 <div id="builder" hidden>
 <header>
   <div><h1>Planner Builder</h1><div class="tag">Make a planner that feels like yours ♡</div></div>
-  <div class="top-actions"><button class="topbtn dark" onclick="startBuilder()">← Home</button><button class="topbtn" onclick="printPlanner()">🖨 Print / Save PDF</button></div>
+  <div class="top-actions"><button class="topbtn dark" onclick="goHome()">← Home</button><button class="topbtn" onclick="printPlanner()">🖨 Print / Save PDF</button></div>
 </header>
 <div class="app">
 <aside class="no-print">
@@ -76,7 +77,7 @@ function page(){return state.pages[state.active]}
 function ph(t){return page().showPlaceholder?t:''}
 function save(){localStorage.setItem('planner-builder-v2',JSON.stringify(state))}
 function load(){try{const x=JSON.parse(localStorage.getItem('planner-builder-v2')||'null');if(x&&x.pages)state=x}catch(e){}}
-function startBuilder(){ $('welcome').hidden=true;$('builder').hidden=false;state.started=true;save();render()}
+function startBuilder(){ $('welcome').hidden=true;$('builder').hidden=false;state.started=true;save();render()} function goHome(){ $('builder').hidden=true;$('welcome').hidden=false;state.started=false;save()}
 function pageName(p,i){return (p.title&&p.title!=='My Planner'?p.title:p.type==='month'?'Monthly Calendar':p.type==='week'?'Weekly Planner':p.type==='notes'?'Cornell Notes':p.type==='daily'?'Daily Planner':'Habit Tracker')+' '+(i+1)}
 function renderList(){ $('pageList').innerHTML=state.pages.map((p,i)=>'<div class="page-item"><button class="'+(i===state.active?'active':'')+'" onclick="selectPage('+i+')">'+esc(pageName(p,i))+'</button><button class="x" onclick="selectPage('+i+');deletePage()">×</button></div>').join('')}
 function applyPageStyle(el,p){el.style.setProperty('--accent',p.accent);el.style.setProperty('--paper',p.customPaper||palettes[p.accent]||'#f1ebf8');el.style.fontFamily=p.font;el.className='paper border-'+p.border+(p.doodles?' doodles':'')}
@@ -95,7 +96,7 @@ function resetPlanner(){localStorage.removeItem('planner-builder-v2');state={pag
 function printPlanner(){renderPrintPages();let old=document.title;document.title='My Planner - Print';window.print();setTimeout(()=>document.title=old,500)}
 document.addEventListener('input',e=>{const slot=e.target.dataset.slot;if(slot!==undefined){page().content[slot]=e.target.value;save() }else if(e.target.id==='title'||e.target.id==='subtitle'){page()[e.target.id]=e.target.value;save();render()}})
 $('type').addEventListener('change',e=>{page().type=e.target.value;save();render()});$('font').addEventListener('change',e=>{page().font=e.target.value;save();render()});$('border').addEventListener('change',e=>{page().border=e.target.value;save();render()});$('size').addEventListener('change',e=>{page().size=e.target.value;save();render()});$('customColor').addEventListener('input',e=>{page().customPaper=e.target.value;save();render()});document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{page().accent=b.dataset.c;page().customPaper=palettes[b.dataset.c];save();render()});$('placeholderSwitch').onclick=()=>{page().showPlaceholder=!page().showPlaceholder;save();render()};$('doodleSwitch').onclick=()=>{page().doodles=!page().doodles;save();render()};
-load();if(state.started){$('welcome').hidden=true;$('builder').hidden=false}render();
+load();state.started=false;$('welcome').hidden=false;$('builder').hidden=true;render();
 </script>
 </body>
 </html>
