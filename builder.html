@@ -33,7 +33,7 @@ input,select{width:100%;padding:10px;border:1px solid #d8d0d9;border-radius:10px
 <div id="builder">
 <header>
   <div><h1>Planner Builder</h1><div class="tag">Make a planner that feels like yours ♡</div></div>
-  <div class="top-actions"><button class="topbtn dark" onclick="goHome()">← Home</button><button class="topbtn" onclick="printPlanner()">🖨 Print / Save PDF</button></div>
+  <div class="top-actions"><button class="topbtn dark" onclick="goHome()">← Home</button><button class="topbtn" onclick="printPlanner()">🖨 Print</button><button class="topbtn" onclick="savePlannerPDF()">⬇ Save PDF</button></div>
 </header>
 <div class="builder-shell"><div class="app">
 <aside class="no-print">
@@ -49,13 +49,14 @@ input,select{width:100%;padding:10px;border:1px solid #d8d0d9;border-radius:10px
   <div class="group"><label>Paper size</label><select id="size"><option>A4 Portrait</option><option>A5 Portrait</option><option>US Letter Portrait</option></select></div>
   <div class="group"><label>Decorations</label><div class="placeholder-toggle"><span>Cute doodles</span><button id="doodleSwitch" class="switch on"></button></div></div>
   <div class="group"><label>Placeholder text</label><div class="placeholder-toggle"><span>Show writing prompts</span><button id="placeholderSwitch" class="switch on"></button></div></div>
-  <div class="actions"><button onclick="printPlanner()">⬇ Save / Print PDF</button><button class="secondary" onclick="resetPlanner()">↺ Reset</button><button class="danger" onclick="deletePage()">Delete page</button></div>
+  <div class="actions"><button onclick="printPlanner()">🖨 Print</button><button onclick="savePlannerPDF()">⬇ Save PDF</button><button class="secondary" onclick="resetPlanner()">↺ Reset</button><button class="danger" onclick="deletePage()">Delete page</button></div>
 </aside>
 <main class="workspace"><section class="paper" id="paper"></section></main>
 </div></div>
 </div>
 <div class="print-pages" id="printPages"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 const palettes={'#8b7bb8':'#f1ebf8','#b98fa6':'#f8eaf0','#91a98d':'#edf5ea','#c7a16a':'#fbf2e3','#8d9fc4':'#edf1f9','#6f9e9b':'#e8f4f2'};
 const defaultPage=()=>({type:'month',title:'My Planner',subtitle:'Plan your days, your way',accent:'#8b7bb8',customPaper:'#f1ebf8',size:'A4 Portrait',font:'Inter,system-ui,Arial,sans-serif',border:'soft',doodles:true,showPlaceholder:true,content:{}});
@@ -84,6 +85,7 @@ function duplicatePage(){const copy=JSON.parse(JSON.stringify(page()));state.pag
 function deletePage(){if(state.pages.length===1)return;state.pages.splice(state.active,1);state.active=Math.max(0,state.active-1);save();render()}
 function resetPlanner(){localStorage.removeItem('planner-builder-v2');state={pages:[defaultPage()],active:0,started:true};save();render()}
 function printPlanner(){renderPrintPages();const old=document.title;document.title='Planner Builder';window.print();setTimeout(()=>document.title=old,800)}
+async function savePlannerPDF(){renderPrintPages();if(typeof html2pdf==='undefined'){alert('PDF saving needs an internet connection. Please reconnect and try again.');return}const source=$('printPages');const clone=source.cloneNode(true);clone.id='pdfExportPages';clone.style.cssText='display:block!important;position:fixed;left:-10000px;top:0;width:190mm;margin:0;padding:0;background:#fff;z-index:-1';clone.querySelectorAll('.print-page').forEach((el,i)=>{el.style.boxSizing='border-box';el.style.width='190mm';el.style.height='277mm';el.style.minHeight='277mm';el.style.maxHeight='277mm';el.style.margin='0';el.style.padding='0';el.style.overflow='hidden';el.style.breakAfter=i===clone.querySelectorAll('.print-page').length-1?'auto':'page';el.style.pageBreakAfter=i===clone.querySelectorAll('.print-page').length-1?'auto':'always'});document.body.appendChild(clone);try{await html2pdf().set({margin:0,filename:'my-planner.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(clone).save()}catch(err){console.error(err);alert('Could not save the PDF. Please try again or use Print.')}finally{clone.remove()}}
 document.addEventListener('input',e=>{const slot=e.target.dataset.slot;if(slot!==undefined){page().content[slot]=e.target.value;save() }else if(e.target.id==='title'||e.target.id==='subtitle'){page()[e.target.id]=e.target.value;save();render()}})
 $('type').addEventListener('change',e=>{page().type=e.target.value;save();render()});$('font').addEventListener('change',e=>{page().font=e.target.value;save();render()});$('border').addEventListener('change',e=>{page().border=e.target.value;save();render()});$('size').addEventListener('change',e=>{page().size=e.target.value;save();render()});$('customColor').addEventListener('input',e=>{page().customPaper=e.target.value;save();render()});document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{page().accent=b.dataset.c;page().customPaper=palettes[b.dataset.c];save();render()});$('placeholderSwitch').onclick=()=>{page().showPlaceholder=!page().showPlaceholder;save();render()};$('doodleSwitch').onclick=()=>{page().doodles=!page().doodles;save();render()};
 load();state.started=true;$('builder').hidden=false;render();
